@@ -1,4 +1,4 @@
-Tarea1LP
+Tarea2LP
 ========
 Falta completar HabilityBehavior.java, HabilityT1.java, HabilityT2.java, Bloque.java(DestruirBloque()), Main.java(Llenar tablero).
 
