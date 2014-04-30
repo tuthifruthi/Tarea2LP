@@ -15,7 +15,7 @@ public class BloqueComodin
         return tipo;
     }
 
-    public void setBloqueComodin(Character tipo) {
-        this.tipo=tipo;
+    public void setBloqueComodin(Character type) {
+        this.tipo=type;
     }
 }

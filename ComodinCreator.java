@@ -9,18 +9,26 @@ import java.util.Random;
  */
 public class ComodinCreator extends AbstractCreator
 {
-    Bloque block = new Bloque();
     Character com;
 
-        public void crearBloque()
+        public char crearBloque()
         {
-            Random com = new Random();
-            String comodin = "&$";
-            block.setBloque(comodin.charAt(com.nextInt(comodin.length())));
+            Random num = new Random();
+            int  n = num.nextInt(2) + 1;
+
+            if(n==1)
+            {
+                com='&';
+            }
+            else if(n==2)
+            {
+                com='$';
+            }
+              return com;
         }
 
         public char getComodinCreado(){
-            return com;
+            return this.com;
         }
 
         public void setComodinCreado(Character com) {

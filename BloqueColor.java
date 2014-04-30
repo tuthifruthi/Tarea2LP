@@ -10,10 +10,10 @@ public class BloqueColor
     Character color;
 
     public char getColor(){
-        return color;
+        return this.color;
     }
 
-    public void setColor(Character color) {
-        this.color=color;
+    public void setColor(Character col) {
+        this.color=col;
     }
 }
