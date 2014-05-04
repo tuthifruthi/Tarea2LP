@@ -17,7 +17,6 @@ public class Main {
         Integer naranjo;
         Integer verde;
         Integer amarillo;
-        Integer contador=0;
         Character color;
         Character comodin;
 
@@ -68,7 +67,6 @@ public class Main {
                     col.setColor(colc.crearBloque());  //se ejecuta función crear bloque de color random
                     color=col.getColor();
                     tablero[i][j]=color;
-                    contador+=1;
                 }
 
                 else if(n>95)   //comodin = 5% posibilidades
@@ -76,7 +74,6 @@ public class Main {
                     com.setBloqueComodin(comc.crearBloque()); //se ejecuta función crear bloque comodin random
                     comodin=com.getBloqueComodin();
                     tablero[i][j]=comodin;
-                    contador+=1;
                 }
             }
         }
