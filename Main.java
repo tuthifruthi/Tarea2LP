@@ -7,37 +7,32 @@
  */
 import java.util.Scanner;
 import java.util.Random;
-import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args)
     {
+        //para pedir colores por pantalla
         Integer rojo;
         Integer azul;
         Integer naranjo;
         Integer verde;
         Integer amarillo;
 
+        //contadores de colores
         Integer contadorrojo=0;
         Integer contadorazul=0;
         Integer contadornaranjo=0;
         Integer contadorverde=0;
         Integer contadoramarillo=0;
 
-        Integer bloque1x=0;
-        Integer bloque1y=0;
-        Integer bloque2x=0;
-        Integer bloque2y=0;
+        //para intercambio de bloques
+        Integer bloque1x;
+        Integer bloque1y;
+        Integer bloque2x;
+        Integer bloque2y;
 
-        Character color=null;
-        Character comodin=null;
-        Character bloque1=null;
-        Character bloque2=null;
-        Character bloque11=null;
-        Character bloque22=null;
-
-        Character[][] tablero = new Character[15][15];    //tablero original
-        Character[][] tablerotemp = new Character[15][15]; //tablero temporal para realizar jugadas
+        Bloque[][] tablero = new Bloque[15][15];    //tablero original
+        Bloque[][] tablerotemp = new Bloque[15][15]; //tablero temporal para realizar jugadas.
 
         System.out.println("Presione la tecla ENTER para iniciar el juego\n");
         Scanner keyIn = new Scanner(System.in);
@@ -50,27 +45,22 @@ public class Main {
         rojo=scan1.nextInt();
 
         System.out.println("Color Azul:");
-        Scanner scan2 = new Scanner(System.in);
-        azul=scan2.nextInt();
+        azul=scan1.nextInt();
 
         System.out.println("Color Naranjo:");
-        Scanner scan3 = new Scanner(System.in);
-        naranjo = scan3.nextInt();
+        naranjo = scan1.nextInt();
 
         System.out.println("Color Verde:");
-        Scanner scan4 = new Scanner(System.in);
-        verde = scan4.nextInt();
+        verde = scan1.nextInt();
 
         System.out.println("Color Amarillo:");
-        Scanner scan5 = new Scanner(System.in);
-        amarillo = scan5.nextInt();
+        amarillo = scan1.nextInt();
 
-        //Tablero
+        //Objetos
         AbstractCreator col = new ColorCreator();
-        Bloque blockcol= col.crearBloque();
-
         AbstractCreator com = new ComodinCreator();
-        Bloque blockcom= com.crearBloque();
+        Bloque bloque1=new BloqueColor();
+        Bloque bloque2=new BloqueColor();
 
 
         Random num=new Random();
@@ -79,18 +69,16 @@ public class Main {
         {
             for(int j=0; j<15;j++)
             {
-                int  n = num.nextInt(100); //genera num entre 1 y 100
+                int  n = num.nextInt(101); //genera num entre 1 y 100
 
                 if(n<=95)  //color = 95% posibilidades
                 {
-                    color=blockcol.getBloque();  //se ejecuta función crear bloque de color random
-                    tablero[i][j]=color;
+                    tablero[i][j]= col.crearBloque();
                 }
 
                 else if(n>95)   //comodin = 5% posibilidades
                 {
-                    comodin=blockcom.getBloque(); //se ejecuta función crear bloque comodin random
-                    tablero[i][j]=comodin;
+                    tablero[i][j]= com.crearBloque();
                 }
             }
         }
@@ -100,36 +88,34 @@ public class Main {
         {
             for(int j = 0; j < 15; j++)
             {
-                System.out.printf("%c\t", tablero[i][j]);
+                System.out.printf("%c\t", (tablero[i][j]).getBloque());
             }
             System.out.println();
         }
 
-        //mientras no se rompan los bloques ingresados al inicio del juego, el juego continúa
+         //mientras no se rompan los bloques ingresados al inicio del juego, el juego continúa
         while(contadorrojo!=rojo && contadoramarillo!=amarillo && contadorazul!=azul && contadornaranjo!=naranjo && contadorverde!=verde)
         {
+            System.out.println("\033[2J\033[H");   //limpia pantalla por jugada
+
             //realizar jugada
             System.out.println("Ingrese las coordenadas de los bloques que desea intercambiar de posición: ");
 
             System.out.println("Bloque 1: ");
             System.out.println("Coordenada X: ");
-            Scanner scan6 = new Scanner(System.in);
-            bloque1x = scan6.nextInt();
+            bloque1x = scan1.nextInt();
 
             System.out.println("Coordenada Y: ");
-            Scanner scan8 = new Scanner(System.in);
-            bloque1y = scan8.nextInt();
+            bloque1y = scan1.nextInt();
 
             System.out.println("Bloque 2: ");
             System.out.println("Coordenada X: ");
-            Scanner scan7 = new Scanner(System.in);
-            bloque2x = scan7.nextInt();
+            bloque2x = scan1.nextInt();
 
             System.out.println("Coordenada Y: ");
-            Scanner scan9 = new Scanner(System.in);
-            bloque2y = scan9.nextInt();
+            bloque2y = scan1.nextInt();
 
-            //Intercambio de posición de bloques pedidos al usuario
+            //Intercambio de posición de bloques pedidos al usuario. Almacena en tablerotemp
             for(int i=0; i<15; i++)
             {
                 for(int j=0; j<15;j++)
@@ -138,13 +124,13 @@ public class Main {
                     if(i==bloque1x && j==bloque1y) //para bloque 1
                     {
                         bloque1=tablero[i][j];
-                        System.out.println("Ha pedido intercambiar el bloque %c"+bloque1);
+                        System.out.println("Ha pedido intercambiar el bloque %c"+bloque1.getBloque());
                     }
 
                     else if(i==bloque2x && j==bloque2y) //para bloque 2
                     {
                         bloque2=tablero[i][j];
-                        System.out.println("con el bloque %c"+bloque2);
+                        System.out.println("con el bloque %c"+bloque2.getBloque());
                     }
 
                     else  //si no son los pedidos, los guarda directamente en el tablero temporal
@@ -158,44 +144,351 @@ public class Main {
                 }
             }
 
+            //Imprime por pantalla los bloques cambiados de posicion
+            for(int i = 0; i < 15; i++)
+            {
+                for(int j = 0; j < 15; j++)
+                {
+                    System.out.printf("%c\t", (tablerotemp[i][j]).getBloque());
+                }
+                System.out.println();
+            }
+
             //Eliminación de bloques iguales
+
+            //Bloque 1
+            if(bloque1y<13 && tablerotemp[bloque1x][bloque1y+1]==bloque1 && tablerotemp[bloque1x][bloque1y+2]==bloque1)  // dos bloques a su derecha
+            {
+                if(((BloqueColor) bloque1).getColor()=='R')
+                {
+                    contadorrojo+=3;
+                }
+                else if(((BloqueColor) bloque1).getColor()=='B')
+                {
+                    contadorazul+=3;
+                }
+                else if(((BloqueColor) bloque1).getColor()=='O')
+                {
+                    contadornaranjo+=3;
+                }
+                else if(((BloqueColor) bloque1).getColor()=='G')
+                {
+                    contadorverde+=3;
+                }
+                else if(((BloqueColor) bloque1).getColor()=='Y')
+                {
+                    contadoramarillo+=3;
+                }
+
+                if (bloque1 instanceof BloqueColor && tablerotemp[bloque1x][bloque1y+1] instanceof BloqueColor && tablerotemp[bloque1x][bloque1y+2] instanceof BloqueColor)
+                {
+                   bloque1.DestruirBloque(bloque1);
+                   bloque1.DestruirBloque(tablerotemp[bloque1x][bloque1y+1]);
+                   bloque1.DestruirBloque(tablerotemp[bloque1x][bloque1y+2]);
+                }
+
+                for(int i = 0; i < 15; i++)
+                {
+                    for(int j = 0; j < 15; j++)
+                    {
+                        System.out.printf("%c\t", (tablerotemp[i][j]).getBloque());
+                    }
+                    System.out.println();
+                }
+
+                System.out.println("Bloques Restantes: ");
+                System.out.println("Bloques Azules: %c "+contadorazul);
+                System.out.println("Bloques Rojos: %c"+contadorrojo);
+                System.out.println("Bloques Amarillos: %c"+contadoramarillo);
+                System.out.println("Bloques Verdes: %c"+contadorverde);
+                System.out.println("Bloques Naranjos: %c"+contadornaranjo);
+            }
+            else if(bloque1y>1 && tablerotemp[bloque1x][bloque1y-1]==bloque1 && tablerotemp[bloque1x][bloque1y-2]==bloque1)    //dos bloques a su izquierda
+            {
+                if(((BloqueColor) bloque1).getColor()=='R')
+                {
+                    contadorrojo+=3;
+                }
+                else if(((BloqueColor) bloque1).getColor()=='B')
+                {
+                    contadorazul+=3;
+                }
+                else if(((BloqueColor) bloque1).getColor()=='O')
+                {
+                    contadornaranjo+=3;
+                }
+                else if(((BloqueColor) bloque1).getColor()=='G')
+                {
+                    contadorverde+=3;
+                }
+                else if(((BloqueColor) bloque1).getColor()=='Y')
+                {
+                    contadoramarillo+=3;
+                }
+
+                if (bloque1 instanceof BloqueColor && tablerotemp[bloque1x][bloque1y-1] instanceof BloqueColor && tablerotemp[bloque1x][bloque1y-2] instanceof BloqueColor)
+                {
+                    bloque1.DestruirBloque(bloque1);
+                    bloque1.DestruirBloque(tablerotemp[bloque1x][bloque1y-1]);
+                    bloque1.DestruirBloque(tablerotemp[bloque1x][bloque1y-2]);
+                }
+
+                for(int i = 0; i < 15; i++)
+                {
+                    for(int j = 0; j < 15; j++)
+                    {
+                        System.out.printf("%c\t", (tablerotemp[i][j]).getBloque());
+                    }
+                    System.out.println();
+                }
+
+                System.out.println("Bloques Restantes: ");
+                System.out.println("Bloques Azules: %c "+contadorazul);
+                System.out.println("Bloques Rojos: %c"+contadorrojo);
+                System.out.println("Bloques Amarillos: %c"+contadoramarillo);
+                System.out.println("Bloques Verdes: %c"+contadorverde);
+                System.out.println("Bloques Naranjos: %c"+contadornaranjo);
+            }
+            else if(bloque1x>1 && tablerotemp[bloque1x-1][bloque1y]==bloque1 && tablerotemp[bloque1x-2][bloque1y]==bloque1)  // dos bloques arriba
+            {
+                if(((BloqueColor) bloque1).getColor()=='R')
+                {
+                    contadorrojo+=3;
+                }
+                else if(((BloqueColor) bloque1).getColor()=='B')
+                {
+                    contadorazul+=3;
+                }
+                else if(((BloqueColor) bloque1).getColor()=='O')
+                {
+                    contadornaranjo+=3;
+                }
+                else if(((BloqueColor) bloque1).getColor()=='G')
+                {
+                    contadorverde+=3;
+                }
+                else if(((BloqueColor) bloque1).getColor()=='Y')
+                {
+                    contadoramarillo+=3;
+                }
+
+                if (bloque1 instanceof BloqueColor && tablerotemp[bloque1x-1][bloque1y] instanceof BloqueColor && tablerotemp[bloque1x-2][bloque1y] instanceof BloqueColor)
+                {
+                    bloque1.DestruirBloque(bloque1);
+                    bloque1.DestruirBloque(tablerotemp[bloque1x-1][bloque1y]);
+                    bloque1.DestruirBloque(tablerotemp[bloque1x-2][bloque1y]);
+                }
+
+                for(int i = 0; i < 15; i++)
+                {
+                    for(int j = 0; j < 15; j++)
+                    {
+                        System.out.printf("%c\t", (tablerotemp[i][j]).getBloque());
+                    }
+                    System.out.println();
+                }
+
+                System.out.println("Bloques Restantes: ");
+                System.out.println("Bloques Azules: %c "+contadorazul);
+                System.out.println("Bloques Rojos: %c"+contadorrojo);
+                System.out.println("Bloques Amarillos: %c"+contadoramarillo);
+                System.out.println("Bloques Verdes: %c"+contadorverde);
+                System.out.println("Bloques Naranjos: %c"+contadornaranjo);
+            }
+            else if(bloque1x<13 && tablerotemp[bloque1x+1][bloque1y]==bloque1 && tablerotemp[bloque1x+2][bloque1y]==bloque1)   //dos bloques abajo
+            {
+                if(((BloqueColor) bloque1).getColor()=='R')
+                {
+                    contadorrojo+=3;
+                }
+                else if(((BloqueColor) bloque1).getColor()=='B')
+                {
+                    contadorazul+=3;
+                }
+                else if(((BloqueColor) bloque1).getColor()=='O')
+                {
+                    contadornaranjo+=3;
+                }
+                else if(((BloqueColor) bloque1).getColor()=='G')
+                {
+                    contadorverde+=3;
+                }
+                else if(((BloqueColor) bloque1).getColor()=='Y')
+                {
+                    contadoramarillo+=3;
+                }
+
+                if (bloque1 instanceof BloqueColor && tablerotemp[bloque1x+1][bloque1y] instanceof BloqueColor && tablerotemp[bloque1x+2][bloque1y] instanceof BloqueColor)
+                {
+                    bloque1.DestruirBloque(bloque1);
+                    bloque1.DestruirBloque(tablerotemp[bloque1x+1][bloque1y]);
+                    bloque1.DestruirBloque(tablerotemp[bloque1x+2][bloque1y]);
+                }
+
+                for(int i = 0; i < 15; i++)
+                {
+                    for(int j = 0; j < 15; j++)
+                    {
+                        System.out.printf("%c\t", (tablerotemp[i][j]).getBloque());
+                    }
+                    System.out.println();
+                }
+
+                System.out.println("Bloques Restantes: ");
+                System.out.println("Bloques Azules: %c "+contadorazul);
+                System.out.println("Bloques Rojos: %c"+contadorrojo);
+                System.out.println("Bloques Amarillos: %c"+contadoramarillo);
+                System.out.println("Bloques Verdes: %c"+contadorverde);
+                System.out.println("Bloques Naranjos: %c"+contadornaranjo);
+            }
+            else if((bloque1x>0 && bloque1x<14) && tablerotemp[bloque1x+1][bloque1y]==bloque1 && tablerotemp[bloque1x+2][bloque1y]==bloque1)//un bloque arriba y otro abajo
+            {
+                if(((BloqueColor) bloque1).getColor()=='R')
+                {
+                    contadorrojo+=3;
+                }
+                else if(((BloqueColor) bloque1).getColor()=='B')
+                {
+                    contadorazul+=3;
+                }
+                else if(((BloqueColor) bloque1).getColor()=='O')
+                {
+                    contadornaranjo+=3;
+                }
+                else if(((BloqueColor) bloque1).getColor()=='G')
+                {
+                    contadorverde+=3;
+                }
+                else if(((BloqueColor) bloque1).getColor()=='Y')
+                {
+                    contadoramarillo+=3;
+                }
+
+                if (bloque1 instanceof BloqueColor && tablerotemp[bloque1x+1][bloque1y] instanceof BloqueColor && tablerotemp[bloque1x+2][bloque1y] instanceof BloqueColor)
+                {
+                    bloque1.DestruirBloque(bloque1);
+                    bloque1.DestruirBloque(tablerotemp[bloque1x+1][bloque1y]);
+                    bloque1.DestruirBloque(tablerotemp[bloque1x+2][bloque1y]);
+                }
+
+
+                for(int i = 0; i < 15; i++)
+                {
+                    for(int j = 0; j < 15; j++)
+                    {
+                        System.out.printf("%c\t", (tablerotemp[i][j]).getBloque());
+                    }
+                    System.out.println();
+                }
+
+                System.out.println("Bloques Restantes: ");
+                System.out.println("Bloques Azules: %c "+contadorazul);
+                System.out.println("Bloques Rojos: %c"+contadorrojo);
+                System.out.println("Bloques Amarillos: %c"+contadoramarillo);
+                System.out.println("Bloques Verdes: %c"+contadorverde);
+                System.out.println("Bloques Naranjos: %c"+contadornaranjo);
+            }
+            else if((bloque1y>0 && bloque1y<14) && tablerotemp[bloque1x][bloque1y-1]==bloque1 && tablerotemp[bloque1x][bloque1y+1]==bloque1)     //un bloque a la derecha y el otro a la izquierda
+            {
+                if(((BloqueColor) bloque1).getColor()=='R')
+                {
+                    contadorrojo+=3;
+                }
+                else if(((BloqueColor) bloque1).getColor()=='B')
+                {
+                    contadorazul+=3;
+                }
+                else if(((BloqueColor) bloque1).getColor()=='O')
+                {
+                    contadornaranjo+=3;
+                }
+                else if(((BloqueColor) bloque1).getColor()=='G')
+                {
+                    contadorverde+=3;
+                }
+                else if(((BloqueColor) bloque1).getColor()=='Y')
+                {
+                    contadoramarillo+=3;
+                }
+
+                if (bloque1 instanceof BloqueColor && tablerotemp[bloque1x][bloque1y-1] instanceof BloqueColor && tablerotemp[bloque1x][bloque1y+1] instanceof BloqueColor)
+                {
+                    bloque1.DestruirBloque(bloque1);
+                    bloque1.DestruirBloque(tablerotemp[bloque1x][bloque1y-1]);
+                    bloque1.DestruirBloque(tablerotemp[bloque1x][bloque1y+1]);
+                }
+
+                for(int i = 0; i < 15; i++)
+                {
+                    for(int j = 0; j < 15; j++)
+                    {
+                        System.out.printf("%c\t", (tablerotemp[i][j]).getBloque());
+                    }
+                    System.out.println();
+                }
+
+                System.out.println("Bloques Restantes: ");
+                System.out.println("Bloques Azules: %c "+contadorazul);
+                System.out.println("Bloques Rojos: %c"+contadorrojo);
+                System.out.println("Bloques Amarillos: %c"+contadoramarillo);
+                System.out.println("Bloques Verdes: %c"+contadorverde);
+                System.out.println("Bloques Naranjos: %c"+contadornaranjo);
+             }
+                else
+                  {
+                    System.out.println("No se encontraron bloques a eliminar aledaños al bloque 1");
+                  }
+
+            //Bloque 2
+            if ()
+            {
+
+            }
+
+            else
+            {
+                System.out.println("No se encontraron bloques a eliminar aledaños al bloque 2");
+            }
+
+
+            //Se llenan los espacios "vacios" (con X) con bloques random
             for(int i=0; i<15; i++)
             {
                 for(int j=0; j<15;j++)
                 {
-                    //bloque 1
-                    if(tablerotemp[][])  // dos bloques a su derecha
+                    int  n = num.nextInt(101); //genera num entre 1 y 100
+                    if((tablerotemp[i][j].getBloque())=='X')
                     {
+                        if(n<=95)  //color = 95% posibilidades
+                        {
+                            tablerotemp[i][j]= col.crearBloque();
+                        }
 
+                        else if(n>95)   //comodin = 5% posibilidades
+                        {
+                            tablerotemp[i][j]= com.crearBloque();
+                        }
                     }
-                    else if()    //dos bloques a su izquierda
-                    {
 
-                    }
-                    else if()  // dos bloques arriba
-                    {
-
-                    }
-                    else if()   //dos bloques abajo
-                    {
-
-                    }
-                    else if()     //un bloque arriba y otro abajo
-                    {
-
-                    }
-                    else if()     //un bloque a la derecha y el otro a la izquierda
-                    {
-
-                    }
                 }
             }
+
+            //Almaceno todo lo de tablerotemp en el tablero definitivo
+            for(int i = 0; i < 15; i++)
+            {
+                for(int j = 0; j < 15; j++)
+                {
+                    tablero[i][j]=tablerotemp[i][j];
+                }
+                System.out.println();
+            }
+
             //Se imprime el tablero al finalizar una jugada
             for(int i = 0; i < 15; i++)
             {
                 for(int j = 0; j < 15; j++)
                 {
-                    System.out.printf("%c\t", tablero[i][j]);
+                    System.out.printf("%c\t", (tablero[i][j]).getBloque());
                 }
                 System.out.println();
             }
@@ -207,26 +500,5 @@ public class Main {
         System.out.println("Bloques Amarillos: %c"+contadoramarillo);
         System.out.println("Bloques Verdes: %c"+contadorverde);
         System.out.println("Bloques Naranjos: %c"+contadornaranjo);
-
-        if(bloque1=='R')
-        {
-            contadorrojo+=3;
-        }
-        else if(bloque1=='B')
-        {
-            contadorazul+=3;
-        }
-        else if(bloque1=='O')
-        {
-            contadornaranjo+=3;
-        }
-        else if(bloque1=='G')
-        {
-            contadorverde+=3;
-        }
-        else if(bloque1=='Y')
-        {
-            contadoramarillo+=3;
-        }
     }
 }

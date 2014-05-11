@@ -11,7 +11,7 @@ public class BloqueColor extends Bloque
 
     public void DestruirBloque(Bloque block)
     {
-        block=null;
+        block.bloque='X';
     }
 
     public char getColor(){

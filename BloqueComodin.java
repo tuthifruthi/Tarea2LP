@@ -7,13 +7,13 @@ import java.util.Random;
  * Time: 12:21
  * To change this template use File | Settings | File Templates.
  */
-public class BloqueComodin  extends Bloque
+public class BloqueComodin extends Bloque
 {
     Character tipo;
 
     public void DestruirBloque(Bloque block)
     {
-        block=null;
+        block.bloque='X';
     }
 
     public char getBloqueComodin(){
