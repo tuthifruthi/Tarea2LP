@@ -14,7 +14,25 @@ public class BloqueComodin extends Bloque
     public void DestruirBloque(Bloque block)
     {
         block.bloque='X';
+
     }
+
+   /* public HabilityBehavior Habilidad(Bloque block)
+    {
+        if(block.bloque=='$')    //comodin tipo 1
+        {
+           HabilityT1 hab1=new HabilityT1();
+           hab1.Hability();
+           return (HabilityBehavior) hab1;
+        }
+
+        else if(block.bloque=='&')  //comodin tipo 2
+        {
+            HabilityT2 hab2=new HabilityT2();
+            hab2.Hability();
+            return (HabilityBehavior) hab2;
+        }
+    }  */
 
     public char getBloqueComodin(){
         return tipo;
