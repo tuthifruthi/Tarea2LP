@@ -7,5 +7,5 @@
  */
 abstract class AbstractCreator
 {
-   abstract public char crearBloque();
+   abstract public Bloque crearBloque();
 }

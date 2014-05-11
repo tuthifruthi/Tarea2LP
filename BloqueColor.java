@@ -5,9 +5,14 @@
  * Time: 12:21
  * To change this template use File | Settings | File Templates.
  */
-public class BloqueColor
+public class BloqueColor extends Bloque
 {
     Character color;
+
+    public void DestruirBloque(Bloque block)
+    {
+        block=null;
+    }
 
     public char getColor(){
         return this.color;

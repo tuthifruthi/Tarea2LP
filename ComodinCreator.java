@@ -11,8 +11,9 @@ public class ComodinCreator extends AbstractCreator
 {
     Character com;
 
-        public char crearBloque()
+        public Bloque crearBloque()
         {
+            BloqueComodin comodin=new BloqueComodin();
             Random num = new Random();
             int  n = num.nextInt(2) + 1;
 
@@ -24,7 +25,9 @@ public class ComodinCreator extends AbstractCreator
             {
                 com='$';
             }
-              return com;
+
+            comodin.tipo=com;
+            return (Bloque) comodin;
         }
 
         public char getComodinCreado(){

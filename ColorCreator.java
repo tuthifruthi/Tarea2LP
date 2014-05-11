@@ -11,9 +11,9 @@ public class ColorCreator extends AbstractCreator
 {
     Character col;
 
-    public char crearBloque()
+    public Bloque crearBloque()
     {
-       BloqueColor block = new BloqueColor();   //nuevo bloque
+       BloqueColor block=new BloqueColor();
        Random num=new Random();
        int  n = num.nextInt(5) + 1;
 
@@ -37,7 +37,8 @@ public class ColorCreator extends AbstractCreator
        {
            col='Y';
        }
-        return col;
+        block.color=col;
+        return (Bloque) block;
     }
 
     public char getColorCreado(){

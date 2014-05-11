@@ -5,14 +5,11 @@
  * Time: 12:20
  * To change this template use File | Settings | File Templates.
  */
-public class Bloque
+abstract class Bloque
 {
     Character bloque;
 
-    public void DestruirBloque()
-    {
-
-    }
+    abstract void DestruirBloque(Bloque bloque);
 
     public char getBloque(){
         return bloque;
