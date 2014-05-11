@@ -16,4 +16,4 @@ En Main.java
 - Por jugada almacena los cambios en el tablero definitivo 
 
 Para compilar archivo ANT (build.xml)
-$ "ant compile jar run"
+ant compile jar run
