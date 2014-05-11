@@ -8,4 +8,5 @@
 abstract class AbstractCreator
 {
    abstract public Bloque crearBloque();
+
 }

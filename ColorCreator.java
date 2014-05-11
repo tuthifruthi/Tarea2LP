@@ -37,7 +37,7 @@ public class ColorCreator extends AbstractCreator
        {
            col='Y';
        }
-        block.color=col;
+        block.bloque=col;
         return (Bloque) block;
     }
 

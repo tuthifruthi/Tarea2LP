@@ -8,6 +8,7 @@
 import java.util.Scanner;
 import java.util.Random;
 
+
 public class Main {
     public static void main(String[] args)
     {
@@ -53,7 +54,7 @@ public class Main {
         System.out.println("Color Verde:");
         verde = scan1.nextInt();
 
-        System.out.println("Color Amarillo:");
+        System.out.println("Color Amarillo:\n");
         amarillo = scan1.nextInt();
 
         //Objetos
@@ -69,14 +70,14 @@ public class Main {
         {
             for(int j=0; j<15;j++)
             {
-                int  n = num.nextInt(101); //genera num entre 1 y 100
+                int  n = num.nextInt(100); //genera num entre 1 y 100
 
-                if(n<=95)  //color = 95% posibilidades
+                if(n<95)  //color = 95% posibilidades
                 {
-                    tablero[i][j]= col.crearBloque();
+                    tablero[i][j]=col.crearBloque();
                 }
 
-                else if(n>95)   //comodin = 5% posibilidades
+                else if(n>=95)   //comodin = 5% posibilidades
                 {
                     tablero[i][j]= com.crearBloque();
                 }
@@ -88,16 +89,15 @@ public class Main {
         {
             for(int j = 0; j < 15; j++)
             {
-                System.out.printf("%c\t", (tablero[i][j]).getBloque());
+                System.out.printf("%c\t", tablero[i][j].getBloque());
             }
             System.out.println();
         }
+        System.out.println("\n");
 
          //mientras no se rompan los bloques ingresados al inicio del juego, el juego continúa
         while(contadorrojo!=rojo && contadoramarillo!=amarillo && contadorazul!=azul && contadornaranjo!=naranjo && contadorverde!=verde)
         {
-            System.out.println("\033[2J\033[H");   //limpia pantalla por jugada
-
             //realizar jugada
             System.out.println("Ingrese las coordenadas de los bloques que desea intercambiar de posición: ");
 
@@ -114,6 +114,7 @@ public class Main {
 
             System.out.println("Coordenada Y: ");
             bloque2y = scan1.nextInt();
+            System.out.println("\n");
 
             //Intercambio de posición de bloques pedidos al usuario. Almacena en tablerotemp
             for(int i=0; i<15; i++)
@@ -124,13 +125,14 @@ public class Main {
                     if(i==bloque1x && j==bloque1y) //para bloque 1
                     {
                         bloque1=tablero[i][j];
-                        System.out.println("Ha pedido intercambiar el bloque %c"+bloque1.getBloque());
+                        System.out.println("Ha pedido intercambiar el bloque "+bloque1.getBloque());
                     }
 
                     else if(i==bloque2x && j==bloque2y) //para bloque 2
                     {
                         bloque2=tablero[i][j];
-                        System.out.println("con el bloque %c"+bloque2.getBloque());
+                        System.out.println("con el bloque "+bloque2.getBloque());
+                        System.out.println("\n");
                     }
 
                     else  //si no son los pedidos, los guarda directamente en el tablero temporal
@@ -153,6 +155,7 @@ public class Main {
                 }
                 System.out.println();
             }
+            System.out.println("\n");
 
             //Eliminación de bloques iguales
 
@@ -191,17 +194,18 @@ public class Main {
                 {
                     for(int j = 0; j < 15; j++)
                     {
-                        System.out.printf("%c\t", (tablerotemp[i][j]).getBloque());
+                        System.out.printf("%c\t\n", (tablerotemp[i][j]).getBloque());
                     }
                     System.out.println();
                 }
 
                 System.out.println("Bloques Restantes: ");
-                System.out.println("Bloques Azules: %c "+contadorazul);
-                System.out.println("Bloques Rojos: %c"+contadorrojo);
-                System.out.println("Bloques Amarillos: %c"+contadoramarillo);
-                System.out.println("Bloques Verdes: %c"+contadorverde);
-                System.out.println("Bloques Naranjos: %c"+contadornaranjo);
+                System.out.println("Bloques Azules: %d "+contadorazul);
+                System.out.println("Bloques Rojos: %d"+contadorrojo);
+                System.out.println("Bloques Amarillos: %d"+contadoramarillo);
+                System.out.println("Bloques Verdes: %d"+contadorverde);
+                System.out.println("Bloques Naranjos: %d"+contadornaranjo);
+                System.out.println("\n");
             }
             else if(bloque1y>1 && tablerotemp[bloque1x][bloque1y-1]==bloque1 && tablerotemp[bloque1x][bloque1y-2]==bloque1)    //dos bloques a su izquierda
             {
@@ -237,17 +241,18 @@ public class Main {
                 {
                     for(int j = 0; j < 15; j++)
                     {
-                        System.out.printf("%c\t", (tablerotemp[i][j]).getBloque());
+                        System.out.printf("%c\t\n", (tablerotemp[i][j]).getBloque());
                     }
                     System.out.println();
                 }
 
                 System.out.println("Bloques Restantes: ");
-                System.out.println("Bloques Azules: %c "+contadorazul);
-                System.out.println("Bloques Rojos: %c"+contadorrojo);
-                System.out.println("Bloques Amarillos: %c"+contadoramarillo);
-                System.out.println("Bloques Verdes: %c"+contadorverde);
-                System.out.println("Bloques Naranjos: %c"+contadornaranjo);
+                System.out.println("Bloques Azules: %d "+contadorazul);
+                System.out.println("Bloques Rojos: %d"+contadorrojo);
+                System.out.println("Bloques Amarillos: %d"+contadoramarillo);
+                System.out.println("Bloques Verdes: %d"+contadorverde);
+                System.out.println("Bloques Naranjos: %d"+contadornaranjo);
+                System.out.println("\n");
             }
             else if(bloque1x>1 && tablerotemp[bloque1x-1][bloque1y]==bloque1 && tablerotemp[bloque1x-2][bloque1y]==bloque1)  // dos bloques arriba
             {
@@ -283,17 +288,18 @@ public class Main {
                 {
                     for(int j = 0; j < 15; j++)
                     {
-                        System.out.printf("%c\t", (tablerotemp[i][j]).getBloque());
+                        System.out.printf("%c\t\n", (tablerotemp[i][j]).getBloque());
                     }
                     System.out.println();
                 }
 
                 System.out.println("Bloques Restantes: ");
-                System.out.println("Bloques Azules: %c "+contadorazul);
-                System.out.println("Bloques Rojos: %c"+contadorrojo);
-                System.out.println("Bloques Amarillos: %c"+contadoramarillo);
-                System.out.println("Bloques Verdes: %c"+contadorverde);
-                System.out.println("Bloques Naranjos: %c"+contadornaranjo);
+                System.out.println("Bloques Azules: %d "+contadorazul);
+                System.out.println("Bloques Rojos: %d"+contadorrojo);
+                System.out.println("Bloques Amarillos: %d"+contadoramarillo);
+                System.out.println("Bloques Verdes: %d"+contadorverde);
+                System.out.println("Bloques Naranjos: %d"+contadornaranjo);
+                System.out.println("\n");
             }
             else if(bloque1x<13 && tablerotemp[bloque1x+1][bloque1y]==bloque1 && tablerotemp[bloque1x+2][bloque1y]==bloque1)   //dos bloques abajo
             {
@@ -329,17 +335,18 @@ public class Main {
                 {
                     for(int j = 0; j < 15; j++)
                     {
-                        System.out.printf("%c\t", (tablerotemp[i][j]).getBloque());
+                        System.out.printf("%c\t\n", (tablerotemp[i][j]).getBloque());
                     }
                     System.out.println();
                 }
 
                 System.out.println("Bloques Restantes: ");
-                System.out.println("Bloques Azules: %c "+contadorazul);
-                System.out.println("Bloques Rojos: %c"+contadorrojo);
-                System.out.println("Bloques Amarillos: %c"+contadoramarillo);
-                System.out.println("Bloques Verdes: %c"+contadorverde);
-                System.out.println("Bloques Naranjos: %c"+contadornaranjo);
+                System.out.println("Bloques Azules: %d "+contadorazul);
+                System.out.println("Bloques Rojos: %d"+contadorrojo);
+                System.out.println("Bloques Amarillos: %d"+contadoramarillo);
+                System.out.println("Bloques Verdes: %d"+contadorverde);
+                System.out.println("Bloques Naranjos: %d"+contadornaranjo);
+                System.out.println("\n");
             }
             else if((bloque1x>0 && bloque1x<14) && tablerotemp[bloque1x+1][bloque1y]==bloque1 && tablerotemp[bloque1x+2][bloque1y]==bloque1)//un bloque arriba y otro abajo
             {
@@ -376,17 +383,18 @@ public class Main {
                 {
                     for(int j = 0; j < 15; j++)
                     {
-                        System.out.printf("%c\t", (tablerotemp[i][j]).getBloque());
+                        System.out.printf("%c\t\n", (tablerotemp[i][j]).getBloque());
                     }
                     System.out.println();
                 }
 
                 System.out.println("Bloques Restantes: ");
-                System.out.println("Bloques Azules: %c "+contadorazul);
-                System.out.println("Bloques Rojos: %c"+contadorrojo);
-                System.out.println("Bloques Amarillos: %c"+contadoramarillo);
-                System.out.println("Bloques Verdes: %c"+contadorverde);
-                System.out.println("Bloques Naranjos: %c"+contadornaranjo);
+                System.out.println("Bloques Azules: %d "+contadorazul);
+                System.out.println("Bloques Rojos: %d"+contadorrojo);
+                System.out.println("Bloques Amarillos: %d"+contadoramarillo);
+                System.out.println("Bloques Verdes: %d"+contadorverde);
+                System.out.println("Bloques Naranjos: %d"+contadornaranjo);
+                System.out.println("\n");
             }
             else if((bloque1y>0 && bloque1y<14) && tablerotemp[bloque1x][bloque1y-1]==bloque1 && tablerotemp[bloque1x][bloque1y+1]==bloque1)     //un bloque a la derecha y el otro a la izquierda
             {
@@ -422,24 +430,26 @@ public class Main {
                 {
                     for(int j = 0; j < 15; j++)
                     {
-                        System.out.printf("%c\t", (tablerotemp[i][j]).getBloque());
+                        System.out.printf("%c\t\n", (tablerotemp[i][j]).getBloque());
                     }
                     System.out.println();
                 }
 
                 System.out.println("Bloques Restantes: ");
-                System.out.println("Bloques Azules: %c "+contadorazul);
-                System.out.println("Bloques Rojos: %c"+contadorrojo);
-                System.out.println("Bloques Amarillos: %c"+contadoramarillo);
-                System.out.println("Bloques Verdes: %c"+contadorverde);
-                System.out.println("Bloques Naranjos: %c"+contadornaranjo);
+                System.out.println("Bloques Azules: %d "+contadorazul);
+                System.out.println("Bloques Rojos: %d"+contadorrojo);
+                System.out.println("Bloques Amarillos: %d"+contadoramarillo);
+                System.out.println("Bloques Verdes: %d"+contadorverde);
+                System.out.println("Bloques Naranjos: %d"+contadornaranjo);
+                System.out.println("\n");
              }
                 else
                   {
                     System.out.println("No se encontraron bloques a eliminar aledaños al bloque 1");
+                    System.out.println("\n");
                   }
 
-            //Bloque 2
+            /* //Bloque 2
             if ()
             {
 
@@ -448,7 +458,8 @@ public class Main {
             else
             {
                 System.out.println("No se encontraron bloques a eliminar aledaños al bloque 2");
-            }
+                System.out.println("\n");
+            } */
 
 
             //Se llenan los espacios "vacios" (con X) con bloques random
@@ -480,7 +491,6 @@ public class Main {
                 {
                     tablero[i][j]=tablerotemp[i][j];
                 }
-                System.out.println();
             }
 
             //Se imprime el tablero al finalizar una jugada
@@ -492,13 +502,17 @@ public class Main {
                 }
                 System.out.println();
             }
+            System.out.println("\n");
         }
         System.out.println("El juego ha finalizado!");
         System.out.println("Bloques Restantes: ");
-        System.out.println("Bloques Azules: %c "+contadorazul);
-        System.out.println("Bloques Rojos: %c"+contadorrojo);
-        System.out.println("Bloques Amarillos: %c"+contadoramarillo);
-        System.out.println("Bloques Verdes: %c"+contadorverde);
-        System.out.println("Bloques Naranjos: %c"+contadornaranjo);
+        System.out.println("Bloques Azules: %d "+contadorazul);
+        System.out.println("Bloques Rojos: %d"+contadorrojo);
+        System.out.println("Bloques Amarillos: %d"+contadoramarillo);
+        System.out.println("Bloques Verdes: %d"+contadorverde);
+        System.out.println("Bloques Naranjos: %d"+contadornaranjo);
+        System.out.println("\n");
+
+
     }
 }

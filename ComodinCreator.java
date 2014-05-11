@@ -26,7 +26,7 @@ public class ComodinCreator extends AbstractCreator
                 com='$';
             }
 
-            comodin.tipo=com;
+            comodin.bloque=com;
             return (Bloque) comodin;
         }
 
